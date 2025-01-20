@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
-import 'package:frd_gallery/helpers/database_helper.dart'; // Pastikan import benar
-import 'dart:io'; // Untuk File
+import 'package:GalleryV2/helpers/database_helper.dart'; // Pastikan import benar
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({Key? key}) : super(key: key);
@@ -75,13 +74,6 @@ class _FavoritesPageState extends State<FavoritesPage> {
                               ClipRRect(
                                 borderRadius: BorderRadius.circular(12.0), // Membulatkan sudut gambar
                                 child: image,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(6.0),
-                                child: Text(
-                                  'Added on: ${imageData['date']}',
-                                  style: const TextStyle(fontSize: 14),
-                                ),
                               ),
                               TextButton(
                                 onPressed: () {
