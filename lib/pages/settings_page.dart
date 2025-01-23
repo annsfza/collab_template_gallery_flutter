@@ -1,3 +1,4 @@
+import 'package:GalleryV2/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -45,6 +46,18 @@ class SettingsPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Settings'),
+       actions: [
+  IconButton(
+    icon: const Icon(Icons.logout),
+    onPressed: () {
+      // Clear the JWT token and navigate to the SignInScreen
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const SignInScreen()),
+      );
+    },
+  ),
+],
       ),
       body: ListView(
         children: [

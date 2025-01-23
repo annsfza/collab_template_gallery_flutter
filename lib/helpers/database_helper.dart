@@ -15,7 +15,6 @@ class DatabaseHelper {
     return _database!;
   }
 
-  // Ubah versi database menjadi 2
   Future<Database> _initDB(String filePath) async {
     final dbPath = await getDatabasesPath();
     final path = join(dbPath, filePath);
@@ -23,14 +22,13 @@ class DatabaseHelper {
     return await openDatabase(path, version: 2, onCreate: _createDB, onUpgrade: _onUpgrade);
   }
 
-  // Fungsi untuk membuat database baru
   Future _createDB(Database db, int version) async {
     const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
     const textType = 'TEXT';
     const blobType = 'BLOB';
     const intType = 'INTEGER';
 
-    // Membuat tabel images dengan kolom is_favorite
+    // Tabel untuk menyimpan gambar
     await db.execute(''' 
     CREATE TABLE images ( 
       id $idType, 
@@ -38,16 +36,60 @@ class DatabaseHelper {
       date $textType,
       is_favorite $intType DEFAULT 0
     )''');
+
+    // Tabel untuk menyimpan data pengguna
+    await db.execute('''
+    CREATE TABLE users (
+      id $idType,
+      username $textType NOT NULL UNIQUE,
+      password $textType NOT NULL
+    )''');
   }
 
-  // Fungsi untuk menangani pembaruan skema jika versi database lebih tinggi
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      // Jika versi sebelumnya < 2, tambahkan kolom is_favorite
+      // Menambahkan kolom is_favorite ke tabel images jika belum ada
       await db.execute('''
         ALTER TABLE images ADD COLUMN is_favorite INTEGER DEFAULT 0;
       ''');
     }
+
+    if (oldVersion < 3) {
+      // Membuat tabel users jika belum ada
+      await db.execute('''
+        CREATE TABLE users (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          username TEXT NOT NULL UNIQUE,
+          password TEXT NOT NULL
+        )''');
+    }
+  }
+
+  // Fungsi untuk registrasi pengguna baru
+  Future<int> registerUser(String username, String password,) async {
+    final db = await instance.database;
+
+    try {
+      return await db.insert('users', {
+        'username': username,
+        'password': password,
+      });
+    } catch (e) {
+      throw Exception('Username already exists');
+    }
+  }
+
+  // Fungsi untuk login pengguna
+  Future<Map<String, dynamic>?> loginUser(String username, String password) async {
+    final db = await instance.database;
+
+    final results = await db.query(
+      'users',
+      where: 'username = ? AND password = ?',
+      whereArgs: [username, password],
+    );
+
+    return results.isNotEmpty ? results.first : null;
   }
 
   // Fungsi untuk menyisipkan gambar ke dalam database
@@ -85,7 +127,7 @@ class DatabaseHelper {
     return await db.query(
       'images',
       where: 'is_favorite = ?',
-      whereArgs: [1], // Mengambil gambar dengan is_favorite = 1
+      whereArgs: [1],
     );
   }
 
@@ -105,10 +147,9 @@ class DatabaseHelper {
     final db = await instance.database;
     return await db.update(
       'images',
-      {'is_favorite': isFavorite ? 1 : 0}, // Menandai gambar sebagai favorit
+      {'is_favorite': isFavorite ? 1 : 0},
       where: 'id = ?',
       whereArgs: [id],
     );
   }
 }
-
