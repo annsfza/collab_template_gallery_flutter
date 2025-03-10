@@ -5,7 +5,7 @@ class CustomDialog extends StatelessWidget {
   final String imagePath;
   final String date;
 
-  const CustomDialog({Key? key, required this.imagePath, required this.date}) : super(key: key);
+  const CustomDialog({super.key, required this.imagePath, required this.date});
 
   @override
   Widget build(BuildContext context) {

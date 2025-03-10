@@ -4,7 +4,7 @@ import 'favorites_page.dart';
 import 'settings_page.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -29,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     // Update _pages dynamically to reflect the current theme mode.
-    final List<Widget> _pages = [
+    final List<Widget> pages = [
       const GalleryPage(),
       const FavoritesPage(),
       SettingsPage(
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
       debugShowCheckedModeBanner: false,
       theme: _isDarkMode ? ThemeData.dark() : ThemeData.light(),
       home: Scaffold(
-        body: _pages[_selectedIndex],
+        body: pages[_selectedIndex],
         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,

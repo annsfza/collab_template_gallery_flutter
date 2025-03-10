@@ -5,7 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import '../helpers/database_helper.dart';
 
 class GalleryPage extends StatefulWidget {
-  const GalleryPage({Key? key}) : super(key: key);
+  const GalleryPage({super.key});
 
   @override
   _GalleryPageState createState() => _GalleryPageState();
@@ -14,7 +14,7 @@ class GalleryPage extends StatefulWidget {
 class _GalleryPageState extends State<GalleryPage> {
   final ImagePicker _picker = ImagePicker();
   List<Map<String, dynamic>> _imageFileList = [];
-  Set<int> _selectedImages = {}; // Set untuk menyimpan ID gambar yang dipilih
+  final Set<int> _selectedImages = {}; // Set untuk menyimpan ID gambar yang dipilih
   bool _isSelecting = false; // Untuk mengecek apakah sedang dalam mode memilih
 
   @override

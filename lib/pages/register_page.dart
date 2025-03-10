@@ -12,7 +12,6 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   bool _obscureText = true;
@@ -20,7 +19,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
       String username = _usernameController.text.trim();
-      String email = _emailController.text.trim();
       String password = _passwordController.text;
 
       try {

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:GalleryV2/helpers/database_helper.dart'; // Pastikan import benar
 
 class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({Key? key}) : super(key: key);
+  const FavoritesPage({super.key});
 
   @override
   _FavoritesPageState createState() => _FavoritesPageState();

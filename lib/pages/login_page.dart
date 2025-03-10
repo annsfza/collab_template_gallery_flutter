@@ -3,7 +3,6 @@ import 'package:GalleryV2/pages/home_page.dart';
 import 'package:GalleryV2/pages/register_page.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-// TODO: add flutter_svg package
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
